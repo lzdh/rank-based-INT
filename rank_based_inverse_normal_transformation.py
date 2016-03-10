@@ -8,15 +8,6 @@ import numpy as np
 import pandas as pd
 import scipy.stats as ss
 
-def test():
-    
-    # Test
-    s = pd.Series([2, 1, 1, np.nan, 4, 3], index=["a", "b", "c", "d", "e", "f"])
-    res = rank_INT(s, stochastic=True)
-    print res
-
-    return 0
-
 def rank_INT(series, c=3.0/8, stochastic=True):
     """ Perform rank-based inverse normal transformation on pandas series.
         If stochastic is True ties are given rank randomly, otherwise ties will
@@ -50,7 +41,7 @@ def rank_INT(series, c=3.0/8, stochastic=True):
         # Shuffle by index
         series = series.loc[np.random.permutation(series.index)]
         # Get rank, ties are determined by their position in the series (hence
-        # why we randomised the  series)
+        # why we randomised the series)
         rank = ss.rankdata(series, method="ordinal")
     else:
         # Get rank, ties are averaged
@@ -68,6 +59,15 @@ def rank_to_normal(rank, c, n):
     # Standard quantile function
     x = (rank - c) / (n - 2*c + 1)
     return ss.norm.ppf(x)
+
+def test():
+    
+    # Test
+    s = pd.Series([2, 1, 1, np.nan, 4, 3], index=["a", "b", "c", "d", "e", "f"])
+    res = rank_INT(s, stochastic=True)
+    print res
+
+    return 0
 
 if __name__ == '__main__':
 
