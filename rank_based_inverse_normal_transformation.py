@@ -65,7 +65,7 @@ def test():
     # Test
     s = pd.Series([2, 1, 1, np.nan, 4, 3], index=["a", "b", "c", "d", "e", "f"])
     res = rank_INT(s, stochastic=True)
-    print res
+    print(res)
 
     return 0
 
